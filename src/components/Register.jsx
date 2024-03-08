@@ -1,12 +1,13 @@
-import "./App.css";
+import "./../App.css";
 import React, { useEffect, useState } from "react";
 import { Alert, Box, Button, Stack, TextField } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Loading from "./components/Loading/Loading";
-function App() {
+import Loading from "./Loading/Loading";
+
+const Register = () => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false);
   const [message, setMessage] = useState("");
@@ -14,20 +15,24 @@ function App() {
   const navigate = useNavigate();
   useEffect(() => {}, [loading, alert]);
 
-  const loginSchema = yup.object().shape({
+  const registerSchema = yup.object().shape({
+    name: yup.string().required("required"),
     email: yup.string().email("invalid email").required("required"),
     password: yup.string().required("required"),
+    password_confirmation: yup.string().required("required"),
   });
 
-  const initialValuesLogin = {
+  const initialValues = {
+    name: "",
     email: "",
     password: "",
+    password_confirmation: "",
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     setLoading(true);
     axios
-      .post("http://127.0.0.1:8000/api/login", values)
+      .post("http://127.0.0.1:8000/api/signup", values)
       .then((res) => {
         console.log(res);
         localStorage.setItem("token", res.data.token);
@@ -49,8 +54,8 @@ function App() {
   return !loading ? (
     <Formik
       onSubmit={handleFormSubmit}
-      initialValues={initialValuesLogin}
-      validationSchema={loginSchema}
+      initialValues={initialValues}
+      validationSchema={registerSchema}
     >
       {({
         values,
@@ -81,6 +86,16 @@ function App() {
                   gridTemplateColumns="repeat(4, minmax(0, 1fr))"
                 >
                   <TextField
+                    label="Name"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.name}
+                    name="name"
+                    error={Boolean(touched.name) && Boolean(errors.name)}
+                    helperText={touched.name && errors.name}
+                    sx={{ gridColumn: "span 4" }}
+                  />
+                  <TextField
                     label="Email"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -103,6 +118,23 @@ function App() {
                     helperText={touched.password && errors.password}
                     sx={{ gridColumn: "span 4" }}
                   />
+                  <TextField
+                    label="Confirm Password"
+                    type="password"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.password_confirmation}
+                    name="password_confirmation"
+                    error={
+                      Boolean(touched.password_confirmation) &&
+                      Boolean(errors.password_confirmation)
+                    }
+                    helperText={
+                      touched.password_confirmation &&
+                      errors.password_confirmation
+                    }
+                    sx={{ gridColumn: "span 4" }}
+                  />
                 </Box>
                 <Box>
                   <Button
@@ -114,7 +146,7 @@ function App() {
                       p: "1rem",
                     }}
                   >
-                    LOGIN
+                    Sign Up
                   </Button>
                 </Box>
                 <div
@@ -123,7 +155,7 @@ function App() {
                     justifyContent: "center",
                   }}
                 >
-                  <Link to="/register">Don't have an account?</Link>
+                  <Link to="/">Return to login</Link>
                 </div>
               </form>
             </div>
@@ -134,6 +166,6 @@ function App() {
   ) : (
     <Loading />
   );
-}
+};
 
-export default App;
+export default Register;
