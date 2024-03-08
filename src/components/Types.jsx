@@ -5,6 +5,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 import { Backdrop, Button, Fade, Modal, TextField } from "@mui/material";
 import swal from "sweetalert";
+import { apiConfig } from "../utils/apiConfig";
 const Types = () => {
   const [types, setTypes] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -29,7 +30,7 @@ const Types = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/types", {
+      .get(`${apiConfig.baseUrl}/types`, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         },

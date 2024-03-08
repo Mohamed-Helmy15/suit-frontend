@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "./Loading/Loading";
+import { apiConfig } from "../utils/apiConfig";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -32,7 +33,7 @@ const Register = () => {
   const handleFormSubmit = async (values, onSubmitProps) => {
     setLoading(true);
     axios
-      .post("http://127.0.0.1:8000/api/signup", values)
+      .post(`${apiConfig.baseUrl}/signup`, values)
       .then((res) => {
         console.log(res);
         localStorage.setItem("token", res.data.token);

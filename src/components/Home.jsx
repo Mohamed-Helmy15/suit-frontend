@@ -6,6 +6,7 @@ import Loading from "./Loading/Loading";
 import { Button } from "@mui/material";
 import PopUp from "./PopUp";
 import SuitCard from "./SuitCard";
+import { apiConfig } from "../utils/apiConfig";
 const Home = () => {
   const [suits, setSuits] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +20,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/suits", {
+      .get(`${apiConfig.baseUrl}/suits`, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         },

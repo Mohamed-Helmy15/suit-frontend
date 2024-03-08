@@ -12,6 +12,7 @@ import { Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import swal from "sweetalert";
 import * as yup from "yup";
+import { apiConfig } from "../utils/apiConfig";
 const PopUp = ({
   targetSuit,
   setLoading,
@@ -56,7 +57,7 @@ const PopUp = ({
     }
 
     axios
-      .post(`http://127.0.0.1:8000/api/suit/${targetSuit}`, formData, {
+      .post(`${apiConfig.baseUrl}/suit/${targetSuit}`, formData, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
           "Content-Type": "multipart/form-data",
@@ -78,7 +79,7 @@ const PopUp = ({
   };
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/types", {
+      .get(`${apiConfig.baseUrl}/types`, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         },

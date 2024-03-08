@@ -9,6 +9,7 @@ import Home from "./components/Home";
 import Types from "./components/Types";
 import NewSuit from "./components/NewSuit";
 import Register from "./components/Register";
+import RequireAuth from "./utils/RequireAuth";
 
 const router = createBrowserRouter([
   {
@@ -21,15 +22,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/suits",
-    element: window.localStorage.getItem("token") ? <Home /> : <App />,
+    element: (
+      <RequireAuth>
+        <Home />
+      </RequireAuth>
+    ),
   },
   {
     path: "/suits/new",
-    element: window.localStorage.getItem("token") ? <NewSuit /> : <App />,
+    element: (
+      <RequireAuth>
+        <NewSuit />
+      </RequireAuth>
+    ),
   },
   {
     path: "/types",
-    element: window.localStorage.getItem("token") ? <Types /> : <App />,
+    element: (
+      <RequireAuth>
+        <Types />
+      </RequireAuth>
+    ),
   },
 ]);
 

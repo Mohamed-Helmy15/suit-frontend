@@ -1,5 +1,7 @@
+import axios from "axios";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { apiConfig } from "../utils/apiConfig";
 
 const Navbar = ({ page }) => {
   const navigate = useNavigate();
@@ -32,6 +34,16 @@ const Navbar = ({ page }) => {
           }}
           onClick={() => {
             localStorage.clear();
+            axios
+              .delete(`${apiConfig.baseUrl}/logout`, {
+                headers: {
+                  Authorization: `Bearer ${window.localStorage.getItem(
+                    "token"
+                  )}`,
+                },
+              })
+              .then((res) => res)
+              .catch((err) => err);
             navigate("/");
           }}
         >

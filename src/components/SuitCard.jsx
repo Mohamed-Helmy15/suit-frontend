@@ -9,6 +9,7 @@ import {
 import axios from "axios";
 import React from "react";
 import swal from "sweetalert";
+import { apiConfig } from "../utils/apiConfig";
 
 const SuitCard = ({
   suit,
@@ -67,7 +68,7 @@ const SuitCard = ({
             }).then((willCancel) => {
               if (willCancel) {
                 axios
-                  .delete(`http://127.0.0.1:8000/api/suits/${suit.id}`, {
+                  .delete(`${apiConfig.baseUrl}/suits/${suit.id}`, {
                     headers: {
                       Authorization: `Bearer ${window.localStorage.getItem(
                         "token"

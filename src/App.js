@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "./components/Loading/Loading";
+import { apiConfig } from "./utils/apiConfig";
 function App() {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false);
@@ -27,7 +28,7 @@ function App() {
   const handleFormSubmit = async (values, onSubmitProps) => {
     setLoading(true);
     axios
-      .post("http://127.0.0.1:8000/api/login", values)
+      .post(`${apiConfig.baseUrl}/login`, values)
       .then((res) => {
         console.log(res);
         localStorage.setItem("token", res.data.token);

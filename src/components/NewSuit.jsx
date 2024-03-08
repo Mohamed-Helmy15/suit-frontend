@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
+import { apiConfig } from "../utils/apiConfig";
 const NewSuit = () => {
   const navigate = useNavigate();
   const [types, setTypes] = useState([]);
@@ -40,7 +41,7 @@ const NewSuit = () => {
       formData.append("image", image, image.name);
 
       axios
-        .post("http://127.0.0.1:8000/api/suits", formData, {
+        .post(`${apiConfig.baseUrl}/suits`, formData, {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("token")}`,
             "Content-Type": "multipart/form-data",
